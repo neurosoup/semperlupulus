@@ -1,30 +1,12 @@
-import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-
-import {
-  createDrawerNavigator,
-  DrawerContentComponentProps,
-  DrawerContentScrollView,
-} from "@react-navigation/drawer";
-
-import { Ionicons } from "@expo/vector-icons";
-
-import {
-  Box,
-  Pressable,
-  VStack,
-  Text,
-  Center,
-  HStack,
-  Divider,
-  Icon,
-} from "native-base";
-
-import { useTranslation } from "react-i18next";
+import * as React from 'react';
+import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
+import { Ionicons } from '@expo/vector-icons';
+import { Box, Pressable, VStack, Text, Center, HStack, Divider, Icon } from 'native-base';
+import { useTranslation } from 'react-i18next';
 
 const Drawer = createDrawerNavigator();
 
-const DefaultContent: React.FC<{ route: { name: string } }> = (props) => {
+const DefaultContent: React.FC<{ route: { name: string } }> = props => {
   return (
     <Center>
       <Text mt="12" fontSize="18">
@@ -36,11 +18,11 @@ const DefaultContent: React.FC<{ route: { name: string } }> = (props) => {
 
 const getIcon = (screenName: string) => {
   switch (screenName) {
-    case "Inbox":
+    case 'Inbox':
       return <Ionicons name="person" />;
-    case "Outbox":
+    case 'Outbox':
       return <Ionicons name="person" />;
-    case "Favorites":
+    case 'Favorites':
       return <Ionicons name="person" />;
     default:
       return <Ionicons />;
@@ -66,29 +48,13 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => (
               px="5"
               py="3"
               rounded="md"
-              bg={
-                index === props.state.index
-                  ? "rgba(6, 182, 212, 0.1)"
-                  : "transparent"
-              }
-              onPress={(event) => {
+              bg={index === props.state.index ? 'rgba(6, 182, 212, 0.1)' : 'transparent'}
+              onPress={() => {
                 props.navigation.navigate(name);
-              }}
-            >
+              }}>
               <HStack space="7" alignItems="center">
-                <Icon
-                  color={
-                    index === props.state.index ? "primary.500" : "gray.500"
-                  }
-                  size="5"
-                  as={getIcon(name)}
-                />
-                <Text
-                  fontWeight="500"
-                  color={
-                    index === props.state.index ? "primary.500" : "gray.700"
-                  }
-                >
+                <Icon color={index === props.state.index ? 'primary.500' : 'gray.500'} size="5" as={getIcon(name)} />
+                <Text fontWeight="500" color={index === props.state.index ? 'primary.500' : 'gray.700'}>
                   {name}
                 </Text>
               </HStack>
@@ -104,19 +70,13 @@ const AppScreen = () => {
   const { t, i18n } = useTranslation();
 
   React.useEffect(() => {
-    i18n.changeLanguage("fr");
+    i18n.changeLanguage('fr');
   }, []);
 
   return (
     <Box safeArea flex={1}>
-      <Drawer.Navigator
-        drawerContent={(props) => <CustomDrawerContent {...props} />}
-      >
-        <Drawer.Screen
-          name={"Recipies"}
-          component={DefaultContent}
-          options={{ title: t("recipies") }}
-        />
+      <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
+        <Drawer.Screen name={'Recipies'} component={DefaultContent} options={{ title: t('recipies') }} />
       </Drawer.Navigator>
     </Box>
   );

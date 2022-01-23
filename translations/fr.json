@@ -1,3 +1,7 @@
 {
-  "recipies": "Recettes"
+  "recipies": "Recettes",
+  "signup.your-email": "E-mail",
+  "signup.password": "Mot de passe",
+  "sign-up": "S'inscrire",
+  "signup.proceed": "Envoyer"
 }
