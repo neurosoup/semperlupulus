@@ -1,17 +1,18 @@
 import { produce } from 'immer';
 import { initialState } from './initialState';
 import { Action } from './types';
-import { RootState, Auth } from './types';
+import { AppState, Auth } from './types';
 
-export default (state: RootState = initialState, action: Action<Auth>) => {
+export default (state: AppState = initialState, action: Action<Auth>) => {
   switch (action.type) {
-    case 'AUTH_SIGN_UP':
+    case 'AUTH_SIGNED_UP':
       return produce(state, draft => {
-        draft.user.cognitoUser = action.payload?.cognitoUser;
+        draft.auth.user = action.payload!.user;
+        draft.auth.status = action.payload!.status;
       });
     case 'AUTH_ERROR':
       return produce(state, draft => {
-        draft.user.error = action.payload?.error;
+        draft.auth.error = action.payload!.error;
       });
     default:
       return state;

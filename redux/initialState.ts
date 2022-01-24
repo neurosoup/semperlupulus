@@ -1,5 +1,5 @@
-import { RootState } from './types';
+import { AppState, Status } from './types';
 
-export const initialState: RootState = {
-  user: {},
+export const initialState: AppState = {
+  auth: { status: Status.Idle },
 };

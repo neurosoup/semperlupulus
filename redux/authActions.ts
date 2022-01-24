@@ -1,30 +1,30 @@
 import { CognitoUser } from '@aws-amplify/auth';
 import { signUp } from '../authentication/signup';
-import { Action, AsyncActionCreator, Auth, RootState } from './types';
+import { Action, AsyncActionCreator, Auth, AppState, Status } from './types';
 
 export type AuthActionTypes =
+  | 'AUTH_PROCESSING'
   | 'AUTH_SIGN_UP'
-  | 'AUTH_SIGNING_UP'
   | 'AUTH_SIGNED_UP'
-  | 'AUTH_SIGN_UP_ERROR'
   | 'AUTH_SIGN_IN'
-  | 'AUTH_SIGNING_IN'
   | 'AUTH_SIGNED_IN'
   | 'AUTH_CONFIRM'
-  | 'AUTH_CONFIRMING'
   | 'AUTH_CONFIRMED'
   | 'AUTH_ERROR';
 
-const authSigningUp = (): Action<Auth> => ({ type: 'AUTH_SIGNING_UP' });
-const authSignedUp = (user?: CognitoUser): Action<Auth> => ({ type: 'AUTH_SIGNED_UP', payload: { cognitoUser: user } });
-const authError = (error?: Error): Action<Auth> => ({ type: 'AUTH_ERROR', payload: { error } });
+const authProcessing = (): Action<Auth> => ({ type: 'AUTH_PROCESSING', payload: { status: Status.Loading } });
+const authSignedUp = (user?: CognitoUser): Action<Auth> => ({ type: 'AUTH_SIGNED_UP', payload: { user, error: undefined, status: Status.Idle } });
+const authError = (error?: Error): Action<Auth> => ({ type: 'AUTH_ERROR', payload: { error, status: Status.Error } });
 
 export const authSignUp: AsyncActionCreator<Auth> = (username: string, password: string) => async (dispatch, getState) => {
   try {
-    dispatch(authSigningUp());
+    dispatch(authProcessing());
     const user = await signUp(username, password);
-    dispatch(authSignedUp(user));
-    dispatch(authError(undefined));
+    if (user) {
+      dispatch(authSignedUp(user));
+    } else {
+      dispatch(authError(new Error('Something went wrong while signing up: no user returned !')));
+    }
   } catch (error) {
     dispatch(authError(error as Error));
   }
