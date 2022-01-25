@@ -8,10 +8,10 @@ import { store } from './redux/store';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NativeBaseProvider } from 'native-base';
+import { Box, Center, Container, NativeBaseProvider } from 'native-base';
 
-import AppScreen from './screens/AppScreen';
-import SignupScreen from './screens/SignupScreen';
+import Brewery from './screens/Brewery';
+import AuthSignUp from './screens/AuthSignUp';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,8 +21,8 @@ const App = () => {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Signup">
-            <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="App" component={AppScreen} />
+            <Stack.Screen name="Signup" component={AuthSignUp} options={{ headerShown: false }} />
+            <Stack.Screen name="App" component={Brewery} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

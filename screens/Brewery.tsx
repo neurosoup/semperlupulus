@@ -66,7 +66,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => (
   </DrawerContentScrollView>
 );
 
-const AppScreen = () => {
+const Screen = () => {
   const { t, i18n } = useTranslation();
 
   React.useEffect(() => {
@@ -82,4 +82,4 @@ const AppScreen = () => {
   );
 };
 
-export default AppScreen;
+export default Screen;
